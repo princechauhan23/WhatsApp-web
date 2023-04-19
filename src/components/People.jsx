@@ -46,7 +46,7 @@ const People = () => {
     try {
       const res = await getDoc(doc(db, "chats", combineId));
 
-      console.log(res, res.exists(), "res exists");
+      // console.log(res, res.exists(), "res exists");
       if (!res.exists()) {
         // create a chat in chats collection
         await setDoc(doc(db, "chats", combineId), { messages: [] });

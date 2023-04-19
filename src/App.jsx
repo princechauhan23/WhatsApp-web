@@ -7,7 +7,7 @@ import { UserContext } from "./Context/UserContext";
 
 const App = () => {
   const { currentUser } = useContext(UserContext);
-  console.log(currentUser, "Appjs-currentUser");
+  // console.log(currentUser, "Appjs-currentUser");
 
   // AuthUser function to check if user is logged in or not
   const ProtectedRoute = ({ children }) => {
