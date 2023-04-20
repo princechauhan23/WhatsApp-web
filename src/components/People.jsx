@@ -35,6 +35,7 @@ const People = () => {
     currentUser.uid && getChats();
   }, [currentUser.uid]);
 
+  console.log(chats, "chats")
   // handleSelect fn to select a user
   const handleSelect = async () => {
     // check whether the group(chats in firestore) exists, if not create
