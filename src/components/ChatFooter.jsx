@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { ChatContext } from "../Context/ChatContext";
 import { UserContext } from "../Context/UserContext";
 import {
@@ -18,6 +18,24 @@ const ChatFooter = () => {
 
   const { currentUser } = useContext(UserContext);
   const { data } = useContext(ChatContext);
+  const ref = useRef();
+
+  // Added keydown event to automate the typing of the message
+  document.addEventListener("keydown", (e) => lettersOnly(e));
+
+  const lettersOnly = (e) => {
+    var charCode = e.keyCode;
+    if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123)) {
+      ref.current.focus();
+      document.removeEventListener("keydown", (e) => lettersOnly(e));
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
 
   const sendMessage = async () => {
     await updateDoc(doc(db, "chats", data.chatId), {
@@ -50,15 +68,23 @@ const ChatFooter = () => {
     <div className="chatFooter-container">
       <div className="searchBar" id="chat-searchBar">
         <input
+          ref={ref}
           id="chatfooter-input"
           type="text"
           value={textMessage}
           placeholder="Type a message"
           onChange={(e) => setTextMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
-        <span className="send-message-btn" onClick={sendMessage}>
-          <FontAwesomeIcon icon={faPaperPlane} style={{ color: "#54656f" }} />
-        </span>
+        {textMessage !== "" ? (
+          <span id="sendbtn" className="send-message-btn" onClick={sendMessage}>
+            <FontAwesomeIcon icon={faPaperPlane} style={{ color: "#54656f" }} />
+          </span>
+        ) : (
+          <span className="send-message-btn">
+            <FontAwesomeIcon icon={faPaperPlane} style={{ color: "#6f7d84" }} />
+          </span>
+        )}
       </div>
     </div>
   );

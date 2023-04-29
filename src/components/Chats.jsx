@@ -9,24 +9,23 @@ const Chats = ({ props }) => {
     dispatch({ type: "CHANGE_USER", payload: u });
   };
 
-  // console.log(props, "props");
   const date = new Date(
-    props.chat[1].date?.seconds * 1000
+    props.chat[1]?.date?.seconds * 1000
   ).toLocaleDateString();
-  const lastMessage = props.chat[1].lastMessage?.textMessage || "";
+  const lastMessage = props.chat[1]?.lastMessage?.textMessage || "";
 
   return (
     <div
       className="chats-a3"
-      onClick={() => handleSelect(props.chat[1].userInfo)}
+      onClick={() => handleSelect(props.chat[1]?.userInfo)}
     >
       <div className="aa4">
-        <UserLogo img={props.chat[1].userInfo.photoURL} />
+        <UserLogo img={props.chat[1]?.userInfo?.photoURL} />
       </div>
       <div className="aa5">
         <div className="chat-user">
           <div className="chat-user-name">
-            {props.chat[1].userInfo.displayName}
+            {props.chat[1]?.userInfo?.displayName}
           </div>
           <div className="chat-time">{date}</div>
         </div>

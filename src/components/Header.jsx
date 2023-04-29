@@ -11,14 +11,13 @@ import { UserContext } from "../Context/UserContext";
 const Header = () => {
   const { currentUser } = useContext(UserContext);
   const navigate = useNavigate();
-  console.log(currentUser, "Header-currentUser");
+  // console.log(currentUser, "currentUser fetched in Header.jsx");
 
   const handleMenu = () => {
     document.getElementById("menuDropdown").classList.toggle("show");
   };
 
   const logOut = () => {
-    console.log("log out");
     signOut(auth)
       .then(() => {
         toast.success("Logged Out Successfully", {
@@ -26,18 +25,18 @@ const Header = () => {
           position: "top-right",
           style: {
             background: "#00a884",
-          }
+          },
         });
         navigate("/login");
       })
       .catch((error) => {
-        console.log(error) //consoleeeeeeeeeee
-        toast.error("Unable to log out",{
+        console.log(error); //consoleeeeeeeeeee
+        toast.error("Unable to log out", {
           duration: 3000,
           position: "top-right",
           style: {
             background: "#e15549",
-          }
+          },
         });
       });
   };

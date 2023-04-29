@@ -1,10 +1,8 @@
 import { useRef, useContext, useEffect } from "react";
-// import { ChatContext } from "../Context/ChatContext";
 import { UserContext } from "../Context/UserContext";
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(UserContext);
-  // const { data } = useContext(ChatContext);
 
   const date = new Date(message.date?.seconds * 1000)
     .toTimeString()

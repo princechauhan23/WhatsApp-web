@@ -5,10 +5,7 @@ import Chat from "./Chat";
 import { ChatContext } from "../Context/ChatContext";
 
 const RightPanel = () => {
-  // const [chatThere, setChatThere] = useState(false);
   const { data } = useContext(ChatContext);
-
-  // console.log(data, "data");
 
   return (
     <div className="rightpanel-container">

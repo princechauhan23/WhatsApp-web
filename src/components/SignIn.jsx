@@ -10,15 +10,24 @@ import {
   RecaptchaVerifier,
   updateProfile,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  where,
+  setDoc,
+} from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import toast, { Toaster } from "react-hot-toast";
 import Add from "../images/addAvatar.png";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState();
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [showAuthCode, setShowAuthCode] = useState(false);
+  // const [hasUser, setHasUser] = useState(null);
+  const [bool, setBool] = useState(false);
   const navigate = useNavigate();
 
   // reChatcha verifier for phone auth
@@ -42,6 +51,25 @@ const SignIn = () => {
     await oncaptchaVerify();
     const appVerifier = window.recaptchaVerifier;
 
+    // query to check if user exists
+    const q = query(
+      collection(db, "users"),
+      where("phoneNumber", "==", phoneNumber)
+    );
+    try {
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.docs.length > 0) {
+        setBool(false);
+        // console.log("user exists");
+      } else {
+        setBool(true);
+        // console.log("user does not exist");
+      }
+    } catch (err) {
+      setBool(true);
+      console.log(err, "error in checking user");
+    }
+
     if (phoneNumber.length < 14 && phoneNumber.length >= 12) {
       const confirmationResult = await signInWithPhoneNumber(
         auth,
@@ -49,8 +77,8 @@ const SignIn = () => {
         appVerifier
       );
       window.confirmationResult = confirmationResult;
-      console.log(confirmationResult, "confirmationResult");
       setShowAuthCode(true);
+
       // toast notification for OTP sent
       toast.success("OTP sent to your phone number", {
         duration: 3000,
@@ -59,6 +87,7 @@ const SignIn = () => {
           background: "#00a884",
         },
       });
+
       // SMS sent. Prompt user to type the code from the message, then sign the
     } else {
       alert("Please enter a valid phone number");
@@ -67,9 +96,8 @@ const SignIn = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const displayName = e.target[0].value;
-    const file = e.target[3].files[0];
-    const code = e.target[4].value;
+    const code = e.target[2].value;
+    const displayName = e.target[3].value || "";
     setLoading(true);
 
     try {
@@ -83,37 +111,43 @@ const SignIn = () => {
           background: "#00a884",
         },
       });
-      
-      // create a unique name for the file
-      const date = new Date().getTime();
-      const storageRef = ref(storage, `${displayName + date}`);
 
-      // upload the file
-      const uploadTask = await uploadBytesResumable(storageRef, file);
-      getDownloadURL(uploadTask.ref).then(async (downloadURL) => {
-        try {
-          // update profile
-          await updateProfile(user, {
-            displayName,
-            photoURL: downloadURL,
-          });
+      // upload the file if the user sign in first time
+      if (bool) {
+        const file = e.target[4].files[0];
+        // create a unique name for the file
+        const date = new Date().getTime();
+        const storageRef = ref(storage, `${displayName + date}`);
+        // upload file
+        const uploadTask = await uploadBytesResumable(storageRef, file);
+        getDownloadURL(uploadTask.ref).then(async (downloadURL) => {
+          try {
+            // update profile
+            await updateProfile(user, {
+              displayName,
+              photoURL: downloadURL,
+            });
 
-          // create user on firebase
-          await setDoc(doc(db, "users", user.uid), {
-            uid: user.uid,
-            displayName: displayName,
-            phoneNumber: phoneNumber,
-            photoURL: downloadURL,
-          });
+            // create user on firebase
+            await setDoc(doc(db, "users", user.uid), {
+              uid: user.uid,
+              displayName: displayName,
+              phoneNumber: phoneNumber,
+              photoURL: downloadURL,
+            });
 
-          // create empty user chats on firebase
-          await setDoc(doc(db, "userChats", user.uid), {});
-          navigate("/");
-          setLoading(false);
-        } catch (error) {
-          console.log(error, "error updating profile");
-        }
-      });
+            // create empty user chats on firebase
+            await setDoc(doc(db, "userChats", user.uid), {}, { merge: true });
+            navigate("/");
+            setLoading(false);
+          } catch (error) {
+            console.log(error, "error updating profile");
+          }
+        });
+      } else {
+        navigate("/");
+        // console.log("user chats and profile already exists");
+      }
     } catch (error) {
       setLoading(false);
       // toast notification for error
@@ -134,7 +168,6 @@ const SignIn = () => {
         <span className="title">Sign In</span>
         <div id="sign-in-button"></div>
         <form className="form" onSubmit={handleSubmit}>
-          <input required type="text" placeholder="Display Name" />
           <PhoneInput
             required
             id="phone"
@@ -142,18 +175,6 @@ const SignIn = () => {
             value={phoneNumber}
             onChange={setPhoneNumber}
           />
-          <input
-            required
-            id="file"
-            type="file"
-            name="avatar"
-            accept="image/png, image/jpeg"
-            style={{ display: "none" }}
-          ></input>
-          <label htmlFor="file" className="filelabel">
-            <img src={Add} alt="logo" />
-            <span>Choose Avatar</span>
-          </label>
           <div className="getauthcode" onClick={handleauthcode}>
             Get OTP
           </div>
@@ -167,6 +188,20 @@ const SignIn = () => {
               placeholder="Six digit code"
               // onChange={(e) => setCode(e.target.value)}
             />
+          ) : null}
+          {bool ? <input type="text" placeholder="Display Name" /> : null}
+          <input
+            id="file"
+            type="file"
+            name="avatar"
+            accept="image/png, image/jpeg"
+            style={{ display: "none" }}
+          ></input>
+          {bool ? (
+            <label htmlFor="file" className="filelabel">
+              <img src={Add} alt="logo" />
+              <span>Choose Avatar</span>
+            </label>
           ) : null}
           <button type="submit">
             {loading ? (

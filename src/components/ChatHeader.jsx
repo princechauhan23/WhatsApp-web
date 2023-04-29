@@ -5,18 +5,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ChatHeader = ({ data }) => {
-  // { channelName } is destructured from props
-  console.log(data.data, "data")
   return (
-    <div id={data.data.chatId} className="chatHeader">
+    <div id={data.data?.chatId} className="chatHeader">
       <div className="chatHeader-profile">
         <div id="chat-logo-container">
           <div className="user-logo chat-header-logo">
-            <img src={data.data.user.photoURL} alt="Avatar" />
+            <img src={data.data?.user?.photoURL} alt="Avatar" />
           </div>
         </div>
       </div>
-      <div className="chatHeader-name">{data.data.user.displayName}</div>
+      <div className="chatHeader-name">{data.data?.user?.displayName}</div>
       <div className="chatHeader-menu">
         <FontAwesomeIcon icon={faMagnifyingGlass} />
         <FontAwesomeIcon

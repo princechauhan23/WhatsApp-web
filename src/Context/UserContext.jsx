@@ -11,13 +11,12 @@ export const UserContextProvider = ({ children }) => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
     });
-    
+
     return () => {
       unsub();
     };
   }, []);
-  console.log(currentUser, "user in UserContext");
-  
+
   return (
     <UserContext.Provider value={{ currentUser }}>
       {children}
