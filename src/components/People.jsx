@@ -98,23 +98,30 @@ const People = () => {
     <div className="people-container">
       <SearchChat props={{ user, setUser, searchInput, setSearchInput }} />
       {user.length ? (
-        user.map((u) => (
-          <div key={u.uid} className="chats-a3" onClick={() => handleSelect(u)}>
-            <div className="aa4">
-              <UserLogo img={u.photoURL} />
-            </div>
-            <div className="aa5">
-              <div className="chat-user">
-                <div className="chat-user-name">{u.displayName}</div>
-                {/* <div className="chat-time">today</div> */}
+        <>
+          <p id="search-result">search result</p>
+          {user.map((u) => (
+            <div
+              key={u.uid}
+              className="chats-a3"
+              onClick={() => handleSelect(u)}
+            >
+              <div className="aa4">
+                <UserLogo img={u.photoURL} />
               </div>
-              <div className="chat-latest">
-                {/* <div className="chat-last-msg">{"Last message"}</div> */}
-                {/* <div className="chat-unread-count">{1}</div> */}
+              <div className="aa5">
+                <div className="chat-user">
+                  <div className="chat-user-name">{u.displayName}</div>
+                  {/* <div className="chat-time">today</div> */}
+                </div>
+                <div className="chat-latest">
+                  {/* <div className="chat-last-msg">{"Last message"}</div> */}
+                  {/* <div className="chat-unread-count">{1}</div> */}
+                </div>
               </div>
             </div>
-          </div>
-        ))
+          ))}
+        </>
       ) : (
         <div className="chats-container">{renderChats()}</div>
       )}

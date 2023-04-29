@@ -12,6 +12,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { v4 as uuid } from "uuid";
+import { useEffect } from "react";
 
 const ChatFooter = () => {
   const [textMessage, setTextMessage] = useState("");
@@ -20,16 +21,19 @@ const ChatFooter = () => {
   const { data } = useContext(ChatContext);
   const ref = useRef();
 
-  // Added keydown event to automate the typing of the message
-  document.addEventListener("keydown", (e) => lettersOnly(e));
+  useEffect(() => {
+    ref.current.focus();
+  }, [data]);
 
-  const lettersOnly = (e) => {
-    var charCode = e.keyCode;
-    if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123)) {
-      ref.current.focus();
-      document.removeEventListener("keydown", (e) => lettersOnly(e));
-    }
-  };
+  // Added keydown event to automate the typing of the message
+  // when the user presses any key from a-z
+
+  // const handleMessageKeyDown = (event) => {
+  //   const charCode = event.key.toLowerCase().charCodeAt(0);
+  //   if (charCode >= 97 && charCode <= 122) {
+  //     ref.current.focus();
+  //   }
+  // };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
