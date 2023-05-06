@@ -74,9 +74,9 @@ const Header = () => {
             onClick={handleMenu}
           />
           <div id="menuDropdown" className="dropdown-content">
-            <div>New Group</div>
+            <div>New group</div>
             <div>Settings</div>
-            <div onClick={logOut}>Log Out</div>
+            <div onClick={logOut}>Log out</div>
             <Toaster />
           </div>
         </div>

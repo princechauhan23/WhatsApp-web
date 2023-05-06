@@ -32,7 +32,7 @@ body::-webkit-scrollbar-thumb {
 
 .app-container {
   height: 93vh;
-  width: 85vw;
+  width: 88vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +61,6 @@ body::-webkit-scrollbar-thumb {
   display: flex;
   justify-content: center;
   align-items: center;
-  display: flex;
   flex-direction: column;
 }
 
@@ -236,6 +235,29 @@ body::-webkit-scrollbar-thumb {
   background-color: #ffffff;
   cursor: pointer;
 }
+.chats-a3:hover,
+.filteredMsgCon:hover {
+  background-color: #f0f2f5;
+}
+
+.filteredMsgCon {
+  height: 72px;
+  width: 100%;
+  padding-left: 14px;
+  display: flex;
+  border-bottom: 1px solid #e8e3e3;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.filteredMsg {
+  height: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
 /* chat profile picture grid */
 .aa4 {
   height: 100%;
@@ -313,7 +335,6 @@ body::-webkit-scrollbar-thumb {
 /* RightPanel.jsx */
 .rightpanel-container {
   height: 100%;
-  width: 66%;
   background-color: #f0f2f5;
   display: flex;
   flex-direction: column;
@@ -401,11 +422,11 @@ body::-webkit-scrollbar-thumb {
   height: 0px;
 }
 .chat-container::-webkit-scrollbar-thumb {
-  background-color: #e8e3e3;
+  background-color: darkgray;
   border-radius: 10px;
 }
 .chat-container::-webkit-scrollbar-track {
-  background-color: #f0f2f5;
+  background-color: lightgray;
   border-radius: 10px;
 }
 .message {
@@ -431,12 +452,18 @@ body::-webkit-scrollbar-thumb {
 }
 .owner {
   flex-direction: row-reverse;
-  /* flex-direction: row-reverse; */
 }
 .owner .message-container {
   align-items: flex-end;
   background-color: #d9fdd3;
   border-radius: 10px 0px 10px 10px;
+}
+.msgImage {
+  margin-top: 4px;
+  width: 250px;
+  aspect-ratio: 3/4;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 /* RightPanel ChatFooter.jsx */
@@ -455,15 +482,26 @@ body::-webkit-scrollbar-thumb {
   height: 90%;
   background-color: #ffffff;
 }
-.send-message-btn {
+#paperclip {
+  width: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.send-btns {
   height: 90%;
   width: 7%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  rotate: 19deg;
+  cursor: pointer;
 }
+.send-arrow {
+  rotate: 14deg;
+}
+
 /* SignIn form css */
 .formcontainer {
   background-color: #a7bcff;

@@ -3,24 +3,27 @@ import { UserContext } from "../Context/UserContext";
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(UserContext);
+  const ref = useRef();
 
-  const date = new Date(message.date?.seconds * 1000)
+  console.log(message, "message")
+
+  const date = new Date(message.m?.date?.seconds * 1000)
     .toTimeString()
     .slice(0, 5);
-  const ref = useRef();
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
-  }, [message]);
+  }, [message.m]);
 
   return (
     <div
       ref={ref}
-      id={message.id}
-      className={`message ${message.senderId === currentUser.uid && "owner"}`}
+      id={message.m?.id}
+      className={`message ${message.m?.senderId === currentUser.uid && "owner"}`}
     >
       <div className="message-container">
-        <div className="message-content">{message.textMessage}</div>
+        {message.m?.img && <img className="msgImage" src={message.m?.img} alt="" />}
+        <div className="message-content">{message.m?.textMessage}</div>
         <div className="message-time">{date}</div>
       </div>
     </div>

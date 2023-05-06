@@ -26,7 +26,6 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [showAuthCode, setShowAuthCode] = useState(false);
-  // const [hasUser, setHasUser] = useState(null);
   const [bool, setBool] = useState(false);
   const navigate = useNavigate();
 
