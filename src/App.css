@@ -233,11 +233,11 @@ body::-webkit-scrollbar-thumb {
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  cursor: pointer;
 }
 .chats-a3:hover,
 .filteredMsgCon:hover {
   background-color: #f0f2f5;
+  cursor: pointer;
 }
 
 .filteredMsgCon {
@@ -280,7 +280,8 @@ body::-webkit-scrollbar-thumb {
   margin-left: 0px;
 }
 
-.user-profile-container {
+.user-profile-container,
+#chat-logo-container {
   height: 100%;
   width: 100%;
   display: flex;
@@ -378,13 +379,13 @@ body::-webkit-scrollbar-thumb {
   height: 100%;
   width: 75px;
 }
-#chat-logo-container {
+/* #chat-logo-container {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 .chat-header-logo {
   margin-top: 0;
   margin-left: 0;

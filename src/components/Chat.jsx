@@ -4,7 +4,7 @@ import { onSnapshot, doc } from "firebase/firestore";
 import { ChatContext } from "../Context/ChatContext";
 import Message from "./Message";
 
-const Chat = ({ props }) => {
+const Chat = ({ props, msgId }) => {
   const { data } = useContext(ChatContext);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Chat = ({ props }) => {
   return (
     <div className="chat-container">
       {props.messages.map((m) => (
-        <Message key={m.id} message={{ m }} />
+        <Message key={m.id} message={m} msgid={msgId} />
       ))}
     </div>
   );

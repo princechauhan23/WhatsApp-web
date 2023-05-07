@@ -23,7 +23,7 @@ const SearchMsg = ({ props }) => {
           <FontAwesomeIcon
             icon={faArrowLeft}
             onClick={handleback}
-            style={{ color: "#54656f" }}
+            style={{ color: "#54656f", cursor: "pointer" }}
           />
         )}
         <input

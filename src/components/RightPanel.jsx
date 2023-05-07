@@ -12,8 +12,11 @@ const RightPanel = () => {
   const [showFncPnl, setShowFncPnl] = useState(false);
   const [srchmsgInput, setSrchmsgInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const [messageId, setMessageId] = useState("");
 
   const { data } = useContext(ChatContext);
+
+  console.log(messageId, "messageId");
 
   const styles = {
     extraPanel: {
@@ -53,7 +56,9 @@ const RightPanel = () => {
     } else {
       messages.filter((m) => {
         if (m.textMessage.toLowerCase().includes(srchmsgInput.toLowerCase())) {
-          filteredMsg.push(<FilteredMsg key={m.id} props={{ m }} />);
+          filteredMsg.push(
+            <FilteredMsg key={m.id} props={{ m, setMessageId }} />
+          );
         }
       });
     }
@@ -66,7 +71,10 @@ const RightPanel = () => {
         {data.chatId !== "null" ? (
           <>
             <ChatHeader data={{ data, setShowFncPnl }} />
-            <Chat props={{ messages, setMessages }} />
+            <Chat
+              props={{ messages, setMessages }}
+              msgId={{ messageId, setMessageId }}
+            />
             <ChatFooter />
           </>
         ) : (
@@ -84,8 +92,12 @@ const RightPanel = () => {
             <FontAwesomeIcon
               icon={faXmark}
               size="xl"
-              style={{ color: "#54656f" }}
-              onClick={() => setShowFncPnl(false)}
+              style={{ color: "#54656f", cursor: "pointer" }}
+              onClick={() => {
+                setShowFncPnl(false);
+                setMessageId("");
+                setSrchmsgInput("");
+              }}
             />
             <p>Search Messages</p>
           </div>
