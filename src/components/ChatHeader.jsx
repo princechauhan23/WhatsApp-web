@@ -4,9 +4,25 @@ import {
   faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ChatHeader = ({ data }) => {
+const ChatHeader = ({ data, setContactInfo, setsrchInMsg }) => {
   const handleMenu = () => {
     document.getElementById("chatMenuDropdown").classList.toggle("show");
+    if (document.getElementById("menuDropdown").classList.toggle("show")) {
+      document.getElementById("menuDropdown").classList.toggle("show");
+    }
+  };
+  const profileUtilityfnc = () => {
+    data.setShowFncPnl(true);
+    setsrchInMsg(false);
+    setContactInfo(true);
+    if (
+      document.getElementById("chatMenuDropdown").classList.contains("show")
+    ) {
+      document.getElementById("chatMenuDropdown").classList.toggle("show");
+    }
+    if (document.getElementById("menuDropdown").classList.toggle("show")) {
+      document.getElementById("menuDropdown").classList.toggle("show");
+    }
   };
 
   return (
@@ -18,11 +34,23 @@ const ChatHeader = ({ data }) => {
           </div>
         </div>
       </div>
-      <div className="chatHeader-name">{data.data?.user?.displayName}</div>
+      <div
+        onClick={() => {
+          profileUtilityfnc();
+        }}
+        className="chatHeader-name"
+      >
+        {data.data?.user?.displayName}
+      </div>
       <div className="chatHeader-menu">
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
-          onClick={() => data.setShowFncPnl(true)}
+          onClick={() => {
+            data.setShowFncPnl(true);
+            setContactInfo(false);
+            setsrchInMsg(true);
+          }}
+          style={{ cursor: "pointer" }}
         />
         <FontAwesomeIcon
           id="menu-icon"
@@ -31,7 +59,13 @@ const ChatHeader = ({ data }) => {
           onClick={handleMenu}
         />
         <div id="chatMenuDropdown" className="dropdown-content">
-          <div>Contact info</div>
+          <div
+            onClick={() => {
+              profileUtilityfnc();
+            }}
+          >
+            Contact info
+          </div>
           <div>Clear messages</div>
           <div>Delete chat</div>
         </div>

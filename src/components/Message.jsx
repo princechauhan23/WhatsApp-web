@@ -14,17 +14,11 @@ const Message = ({ message, msgid }) => {
     if (msgid?.messageId !== "") {
       const element = document.getElementById(msgid.messageId);
       const children = element?.children[0];
-      // scroll the element into view
       element.scrollIntoView(true, { behavior: "smooth", block: "center" });
-      // get the original background color
       setOriginalBackgroundColor(children.style.backgroundColor);
-      // set the background color and Add transition
       children.style.transition = "background-color 0.6s ease-in-out";
       children.style.backgroundColor = "#e0e0e0";
-      // remove the background color after 0.5s
       setTimeout(() => {
-        console.log(children.style.backgroundColor, "children");
-        console.log(originalBackgroundColor, "originalBackgroundColor");
         children.style.backgroundColor = originalBackgroundColor;
         setOriginalBackgroundColor("");
       }, 600);

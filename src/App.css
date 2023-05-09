@@ -250,6 +250,7 @@ body::-webkit-scrollbar-thumb {
   justify-content: center;
   align-items: center;
   gap: 5px;
+  color: #54656f;
 }
 .filteredMsg {
   height: 20px;
@@ -399,6 +400,7 @@ body::-webkit-scrollbar-thumb {
   font-size: 21px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .chatHeader-menu {
   height: 100%;
@@ -502,6 +504,86 @@ body::-webkit-scrollbar-thumb {
 .send-arrow {
   rotate: 14deg;
 }
+.contact-info {
+  height: 320px;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: #cacaca 3px solid;
+}
+.contact-info p {
+  margin-top: 25px;
+  font-size: 18px;
+  color: #54656f;
+}
+.contact-info-profile {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contact-info-profile img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.contact-media {
+  height: 120px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  border-bottom: 3px solid #cacaca;
+}
+.contact-media p {
+  margin: 7px 10px;
+  color: #54656f;
+}
+.media-m1 {
+  height: 80px;
+  width: 95%;
+  margin: 0px 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  background-color: #e8e3e3;
+}
+.media-m2 {
+  height: 60px;
+  width: 60px;
+  margin-left: 8px;
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contact-info-opt {
+  width: 100%;
+  margin-top: 10px;
+}
+.encryption {
+  height: 45px;
+  width: 90%;
+  display: flex;
+  /* justify-content: start; */
+  align-items: center;
+  padding: 5px 15px;
+}
+.encryption p {
+  margin: 0px 12px 0px 12px;
+  font-size: 16px;
+}
+
 
 /* SignIn form css */
 .formcontainer {

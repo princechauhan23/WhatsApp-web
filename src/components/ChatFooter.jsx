@@ -101,6 +101,7 @@ const ChatFooter = () => {
           id="chatfooter-input"
           type="text"
           value={textMessage}
+          autoComplete="off"
           placeholder="Type a message"
           onChange={(e) => setTextMessage(e.target.value)}
           onKeyDown={handleKeyDown}

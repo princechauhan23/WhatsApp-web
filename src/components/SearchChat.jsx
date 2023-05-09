@@ -66,6 +66,7 @@ const SearchChat = ({ props }) => {
           type="text"
           name="search"
           value={props.searchInput}
+          autoComplete="off"
           onKeyUp={handleSearch}
           placeholder="Search or start new chat"
           onChange={(e) => props.setSearchInput(e.target.value)}
