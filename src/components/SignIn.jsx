@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
+import PhoneInput from "react-phone-number-input/input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import { auth, db, storage } from "../firebase";
@@ -29,6 +29,8 @@ const SignIn = () => {
   const [bool, setBool] = useState(false);
   const navigate = useNavigate();
 
+  console.log(phoneNumber, "phone number");
+
   // reChatcha verifier for phone auth
   function oncaptchaVerify() {
     if (!window.recaptchaVerifier) {
@@ -47,56 +49,67 @@ const SignIn = () => {
   }
 
   async function handleauthcode() {
-    await oncaptchaVerify();
-    const appVerifier = window.recaptchaVerifier;
-
-    // query to check if user exists
-    const q = query(
-      collection(db, "users"),
-      where("phoneNumber", "==", phoneNumber)
-    );
     try {
-      const querySnapshot = await getDocs(q);
-      if (querySnapshot.docs.length > 0) {
-        setBool(false);
-        // console.log("user exists");
+      if (phoneNumber.length < 14 && phoneNumber.length > 12) {
+        await oncaptchaVerify();
+        const appVerifier = window.recaptchaVerifier;
+
+        // query to check if user exists
+        const q = query(
+          collection(db, "users"),
+          where("phoneNumber", "==", phoneNumber)
+        );
+        try {
+          const querySnapshot = await getDocs(q);
+          if (querySnapshot.docs.length > 0) {
+            setBool(false);
+            // console.log("user exists");
+          } else {
+            setBool(true);
+            // console.log("user does not exist");
+          }
+        } catch (err) {
+          setBool(true);
+          console.log(err, "error in checking user");
+        }
+
+        const confirmationResult = await signInWithPhoneNumber(
+          auth,
+          phoneNumber,
+          appVerifier
+        );
+        window.confirmationResult = confirmationResult;
+        setShowAuthCode(true);
+
+        // toast notification for OTP sent
+        toast.success("OTP sent to your phone number", {
+          duration: 3000,
+          position: "top-right",
+          style: {
+            background: "00a884",
+          },
+        });
+
+        // SMS sent. Prompt user to type the code from the message, then sign the
       } else {
-        setBool(true);
-        // console.log("user does not exist");
+        toast.error("Type the correct number!", {
+          duration: 3000,
+          position: "top-right",
+          style: {
+            background: "#e12b2b",
+          },
+        });
+        return;
       }
-    } catch (err) {
-      setBool(true);
-      console.log(err, "error in checking user");
-    }
-
-    if (phoneNumber.length < 14 && phoneNumber.length >= 12) {
-      const confirmationResult = await signInWithPhoneNumber(
-        auth,
-        phoneNumber,
-        appVerifier
-      );
-      window.confirmationResult = confirmationResult;
-      setShowAuthCode(true);
-
-      // toast notification for OTP sent
-      toast.success("OTP sent to your phone number", {
-        duration: 3000,
-        position: "top-right",
-        style: {
-          background: "#00a884",
-        },
-      });
-
-      // SMS sent. Prompt user to type the code from the message, then sign the
-    } else {
-      alert("Please enter a valid phone number");
+    } catch (error) {
+      console.log(error, "error in sending otp");
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const code = e.target[2].value;
-    const displayName = e.target[3].value || "";
+    const code = e.target[1].value;
+    const displayName = e.target[2].value || "";
     setLoading(true);
 
     try {
@@ -113,7 +126,7 @@ const SignIn = () => {
 
       // upload the file if the user sign in first time
       if (bool) {
-        const file = e.target[4].files[0];
+        const file = e.target[3].files[0];
         // create a unique name for the file
         const date = new Date().getTime();
         const storageRef = ref(storage, `${displayName + date}`);
@@ -168,8 +181,8 @@ const SignIn = () => {
         <div id="sign-in-button"></div>
         <form className="form" onSubmit={handleSubmit}>
           <PhoneInput
-            required
             id="phone"
+            country="IN"
             placeholder="Phone Number"
             value={phoneNumber}
             onChange={setPhoneNumber}
@@ -188,20 +201,26 @@ const SignIn = () => {
               // onChange={(e) => setCode(e.target.value)}
             />
           ) : null}
-          {bool ? <input type="text" placeholder="Display Name" /> : null}
+          {bool ? (
+            <>
+              <input type="text" placeholder="Display Name" />
+              <label htmlFor="file" className="filelabel">
+                <img src={Add} alt="logo" />
+                <span id="AvatarText">Choose Avatar</span>
+              </label>
+            </>
+          ) : null}
           <input
             id="file"
             type="file"
             name="avatar"
             accept="image/png, image/jpeg"
             style={{ display: "none" }}
+            onChange={(e) => {
+              document.getElementById("AvatarText").innerHTML =
+                e.target.files[0].name;
+            }}
           ></input>
-          {bool ? (
-            <label htmlFor="file" className="filelabel">
-              <img src={Add} alt="logo" />
-              <span>Choose Avatar</span>
-            </label>
-          ) : null}
           <button type="submit">
             {loading ? (
               <FontAwesomeIcon
@@ -214,7 +233,7 @@ const SignIn = () => {
             )}
           </button>
         </form>
-        <p>Don&#39;t have an account? Register </p>
+        <p></p>
       </div>
     </div>
   );

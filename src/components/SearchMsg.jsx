@@ -3,10 +3,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const SearchMsg = ({ props }) => {
-  const handleSearch = (e) => {
-    console.log(e.target.value);
-  };
-
   const handleback = () => {
     props.setSrchmsgInput("");
   };
@@ -31,8 +27,7 @@ const SearchMsg = ({ props }) => {
           name="search"
           value={props.srchmsgInput}
           autoComplete="off"
-          onKeyUp={handleSearch}
-          placeholder="Search or start new chat"
+          placeholder="Search in messages"
           onChange={(e) => props.setSrchmsgInput(e.target.value)}
         />
       </div>

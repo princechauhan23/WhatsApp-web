@@ -131,7 +131,7 @@ const ChatFooter = () => {
               {img ? (
                 <FontAwesomeIcon
                   icon={faXmark}
-                  size="s"
+                  size="sm"
                   style={{ color: "#54656f" }}
                   onClick={removeSelectedFile}
                 />

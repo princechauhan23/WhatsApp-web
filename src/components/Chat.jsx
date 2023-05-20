@@ -8,6 +8,7 @@ const Chat = ({ props, msgId }) => {
   const { data } = useContext(ChatContext);
 
   useEffect(() => {
+    if (data.chatId === "null") return;
     const unsub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
       doc.exists() && props.setMessages(doc.data().messages);
     });

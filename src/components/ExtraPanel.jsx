@@ -10,10 +10,8 @@ import { useState } from "react";
 import SearchMsg from "./SearchMsg";
 import FilteredMsg from "./FilteredMsg";
 
-const SearchinMessages = ({ props, setShowFncPnl, setMessageId }) => {
+const ExtraPanel = ({ props, setShowFncPnl, setMessageId, setShowModal }) => {
   const [srchmsgInput, setSrchmsgInput] = useState("");
-
-  console.log(props.data, "props");
 
   const styles = {
     extraPanel: {
@@ -140,7 +138,7 @@ const SearchinMessages = ({ props, setShowFncPnl, setMessageId }) => {
                   <p>Messages are end-to-end encrypted</p>
                 </div>
               </div>
-              <div className="encryption">
+              <div className="encryption ridofbtn">
                 <FontAwesomeIcon
                   icon={faBan}
                   size="lg"
@@ -150,7 +148,12 @@ const SearchinMessages = ({ props, setShowFncPnl, setMessageId }) => {
                   Block {props.data?.user?.displayName}
                 </p>
               </div>
-              <div className="encryption">
+              <div
+                className="encryption ridofbtn"
+                onClick={() => {
+                  setShowModal(true);
+                }}
+              >
                 <FontAwesomeIcon
                   icon={faTrash}
                   size="lg"
@@ -166,4 +169,4 @@ const SearchinMessages = ({ props, setShowFncPnl, setMessageId }) => {
   );
 };
 
-export default SearchinMessages;
+export default ExtraPanel;

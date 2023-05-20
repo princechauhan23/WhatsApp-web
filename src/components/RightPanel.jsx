@@ -1,8 +1,8 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import ChatHeader from "./ChatHeader";
 import ChatFooter from "./ChatFooter";
 import Chat from "./Chat";
-import SearchinMessages from "./SearchinMessages";
+import ExtraPanel from "./ExtraPanel";
 import { ChatContext } from "../Context/ChatContext";
 
 const RightPanel = () => {
@@ -11,10 +11,14 @@ const RightPanel = () => {
   const [messageId, setMessageId] = useState("");
   const [contactInfo, setContactInfo] = useState(false);
   const [srchInMsg, setsrchInMsg] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const { data } = useContext(ChatContext);
 
-  console.log(messageId, "messageId");
+  useEffect(() => {
+    setMessageId("");
+    setShowFncPnl(false);
+  }, [data.chatId]);
 
   const styles = {
     rightPanel66: {
@@ -31,11 +35,9 @@ const RightPanel = () => {
               data={{ data, setShowFncPnl }}
               setContactInfo={setContactInfo}
               setsrchInMsg={setsrchInMsg}
+              setShowmodal={{ showModal, setShowModal }}
             />
-            <Chat
-              props={{ messages, setMessages }}
-              msgId={{ messageId, setMessageId }}
-            />
+            <Chat props={{ messages, setMessages }} msgId={{ messageId }} />
             <ChatFooter />
           </>
         ) : (
@@ -48,10 +50,11 @@ const RightPanel = () => {
         )}
       </div>
       {showFncPnl ? (
-        <SearchinMessages
+        <ExtraPanel
           props={{ messages, data, contactInfo, srchInMsg }}
           setShowFncPnl={setShowFncPnl}
           setMessageId={setMessageId}
+          setShowModal={setShowModal}
         />
       ) : null}
     </>

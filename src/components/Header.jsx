@@ -16,7 +16,7 @@ const Header = () => {
   const handleMenu = () => {
     document.getElementById("menuDropdown").classList.toggle("show");
     if (
-      document.getElementById("chatMenuDropdown").classList.contains("show")
+      document.getElementById("chatMenuDropdown")?.classList.contains("show")
     ) {
       document.getElementById("chatMenuDropdown").classList.toggle("show");
     }
