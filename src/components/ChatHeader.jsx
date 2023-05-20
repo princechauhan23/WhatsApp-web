@@ -123,6 +123,7 @@ const ChatHeader = ({ data, setContactInfo, setsrchInMsg, setShowmodal }) => {
     }
     setShowmodal.setShowModal(false);
     data.setShowFncPnl(false);
+    data.setMessageId("");
     setShowClearMsgPortal(false);
   };
 

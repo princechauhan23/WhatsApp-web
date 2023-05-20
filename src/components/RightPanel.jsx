@@ -32,7 +32,7 @@ const RightPanel = () => {
         {data.chatId !== "null" ? (
           <>
             <ChatHeader
-              data={{ data, setShowFncPnl }}
+              data={{ data, setShowFncPnl, setMessageId }}
               setContactInfo={setContactInfo}
               setsrchInMsg={setsrchInMsg}
               setShowmodal={{ showModal, setShowModal }}
