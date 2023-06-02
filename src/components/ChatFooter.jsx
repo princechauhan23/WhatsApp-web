@@ -34,7 +34,7 @@ const ChatFooter = () => {
   }, [data]);
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && textMessage !== "") {
       sendMessage();
     }
   };

@@ -576,7 +576,6 @@ body::-webkit-scrollbar-thumb {
   height: 45px;
   width: 90%;
   display: flex;
-  /* justify-content: start; */
   align-items: center;
   padding: 5px 15px;
 }
@@ -638,7 +637,6 @@ body::-webkit-scrollbar-thumb {
   background-color: #079d7c;
 }
 
-
 /* SignIn form css */
 .formcontainer {
   background-color: #a7bcff;
@@ -698,10 +696,6 @@ body::-webkit-scrollbar-thumb {
   height: 25px;
   width: 25px;
   margin-right: 18px;
-}
-
-#phone {
-  /* width: 100%; */
 }
 .getauthcode {
   height: 18px;

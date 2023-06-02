@@ -29,8 +29,6 @@ const SignIn = () => {
   const [bool, setBool] = useState(false);
   const navigate = useNavigate();
 
-  console.log(phoneNumber, "phone number");
-
   // reChatcha verifier for phone auth
   function oncaptchaVerify() {
     if (!window.recaptchaVerifier) {
@@ -183,6 +181,7 @@ const SignIn = () => {
           <PhoneInput
             id="phone"
             country="IN"
+            autoComplete="off"
             placeholder="Phone Number"
             value={phoneNumber}
             onChange={setPhoneNumber}
@@ -195,6 +194,7 @@ const SignIn = () => {
             <input
               required
               id="authcode"
+              autoComplete="off"
               className="seccode"
               type="number"
               placeholder="Six digit code"

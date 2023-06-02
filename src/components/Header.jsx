@@ -50,7 +50,13 @@ const Header = () => {
     <div className="header">
       <div id="user-logo-container">
         <div className="user-logo user-logo-a12">
-          <img src={currentUser.photoURL} alt="logo" />
+          <img
+            src={
+              currentUser.photoURL ||
+              "https://firebasestorage.googleapis.com/v0/b/whatsapp-e1c2b.appspot.com/o/515fd44f-e796-4861-a48c-506a0795056f?alt=media&token=97c5194f-5810-46fe-bee7-7266680836b8"
+            }
+            alt="logo"
+          />
         </div>
       </div>
       <div id="user-other">
