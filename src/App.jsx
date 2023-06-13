@@ -28,8 +28,8 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="login" element={<SignIn />} />
         </Route>
+        <Route path="/login" element={<SignIn />} />
       </Routes>
     </BrowserRouter>
   );
