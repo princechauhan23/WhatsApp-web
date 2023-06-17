@@ -32,7 +32,7 @@ const Header = () => {
             background: "#00a884",
           },
         });
-        navigate("/login");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error); //consoleeeeeeeeeee

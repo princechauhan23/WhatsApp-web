@@ -11,7 +11,8 @@ const App = () => {
   // AuthUser function to check if user is logged in or not
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
-      return <Navigate to="/login" />;
+      // return <Navigate to="/login" />;
+      return <SignIn />;
     }
     return children;
   };
@@ -28,8 +29,9 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          {/* <Route path="login" element={<SignIn />} /> */}
         </Route>
-        <Route path="/login" element={<SignIn />} />
+        {/* <Route path="/login" element={<SignIn />} /> */}
       </Routes>
     </BrowserRouter>
   );
